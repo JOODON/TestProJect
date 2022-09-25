@@ -1,23 +1,23 @@
 package config.example;
 
 import config.ApplicationConfig;
-import dao.RoleDao;
-import dto.Role;
+import dao.GuestBookDao;
+import dto.GuestBook;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import java.util.List;
+import java.util.Date;
 
 public class Main {
     public static void main(String[] args) {
         ApplicationContext ac = new AnnotationConfigApplicationContext(ApplicationConfig.class);
-        //어느 클래스에서 읽어 올거냐? 라는걸 선언 해줌!
-        RoleDao roleDao = ac.getBean(RoleDao.class);
+		GuestBookDao guestbookDao = ac.getBean(GuestBookDao.class);
 
-        List<Role> list = roleDao.selectAll();
-
-        for (Role role : list) {
-            System.out.println(role);
-        }
+		GuestBook guestbook = new GuestBook();
+		guestbook.setName("주동호");
+		guestbook.setContent("게스트북 2");
+		guestbook.setRegdate(new Date());
+		Long id = guestbookDao.insert(guestbook);
+		System.out.println("id : " + id);
     }
 }

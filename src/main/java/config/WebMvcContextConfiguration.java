@@ -9,7 +9,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = { "controller" })
+@ComponentScan(basePackages = {"controller"})
 public class WebMvcContextConfiguration implements WebMvcConfigurer{
     //이렇게 바뀌었대
     @Override

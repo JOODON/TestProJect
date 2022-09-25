@@ -3,17 +3,20 @@ package config;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
 import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-
-public class DBconfig {
+public class DBconfig implements TransactionManagementConfigurer{
     private String driverClassName="com.mysql.cj.jdbc.Driver";
 
-    private String url="jdbc:mysql://localhost:3307/role";
+    private String url="jdbc:mysql://localhost:3307/GuestBook";
 
     private String username="root";
 
@@ -33,4 +36,13 @@ public class DBconfig {
 
         return dataSource;
     }
+    @Override
+    public PlatformTransactionManager annotationDrivenTransactionManager(){
+        return transactionManager();
+    }
+    @Bean
+    public PlatformTransactionManager transactionManager(){
+        return new DataSourceTransactionManager(dataSource());
+    }
+    
 }
